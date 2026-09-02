@@ -1,0 +1,18 @@
+# Phase 1 — Agentic Track
+
+[Course](https://www.udemy.com/course/the-complete-agentic-ai-engineering-course/) · 21.0 hrs · weeks 1–11 · Sep 7 – Nov 22, 2026
+
+Agents from first principles, then five frameworks, then MCP. Eight projects, ending in an autonomous multi-agent capstone.
+
+## Modules
+
+- [`01-foundations/`](01-foundations/) — Foundations
+- [`02-openai-sdk/`](02-openai-sdk/) — OpenAI Agents SDK
+- [`03-crewai/`](03-crewai/) — CrewAI
+- [`04-langgraph/`](04-langgraph/) — LangChain & LangGraph
+- [`05-frameworks/`](05-frameworks/) — Other frameworks
+- [`06-mcp/`](06-mcp/) — Model Context Protocol
+
+## Projects
+
+Eight projects from the course. Each has its own README with what it does and how to run it.

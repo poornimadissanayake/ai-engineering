@@ -1,0 +1,60 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+.uv/
+uv.lock
+build/
+dist/
+
+# Notebooks
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# Data & models — keep the repo light
+*.db
+*.sqlite3
+*.gguf
+*.safetensors
+*.bin
+data/raw/
+data/cache/
+chroma/
+.chroma/
+vector_store/
+
+# Node (front-ends in later phases)
+node_modules/
+.next/
+.turbo/
+npm-debug.log*
+
+# Terraform (Phase 3)
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+
+# OS & editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs & scratch
+*.log
+logs/
+scratch/
+tmp/
