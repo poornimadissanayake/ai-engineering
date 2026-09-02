@@ -10,7 +10,7 @@ The required path is curriculum courses **4 → 5 → 6, in that order**: Core, 
 
 ## Projects
 
-What Ryan (or anyone) should scan first. Each row is a deliverable, not a lecture.
+Each row is a project I build, not a lecture.
 
 | Project | Module | What it does | Link | Status |
 |---|---|---|---|---|
