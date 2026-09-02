@@ -4,7 +4,7 @@ My work through the [complete AI Engineering curriculum](https://edwarddonner.co
 
 The required path is curriculum courses **4 → 5 → 6, in that order**: Core, then Agents, then Production. Every project here is runnable. Every week is logged. The progress table below is the status report.
 
-**Started:** 7 September 2026 · **Pace:** 2 hrs/week · **Required path target:** May 2027
+**Started:** 31 August 2026 · **Pace:** 2 hrs/week · **Required path target:** May 2027
 
 ---
 
@@ -28,23 +28,23 @@ The required path is curriculum courses **4 → 5 → 6, in that order**: Core, 
 
 | Wk | Dates | Module | Target | Built | Status |
 |---:|---|---|---|---|---|
-| 1 | Sep 7–13 | 1 · First LLM product | Env, Chat Completions API, first notebook | Repo scaffold, website summarizer | ⚪ |
-| 2 | Sep 14–20 | 1 · First LLM product | Prompting; compare frontier models | Multi-model comparison note | ⚪ |
-| 3 | Sep 21–27 | 1 · First LLM product | Finish the week 1 commercial project | Runnable summarizer app | ⚪ |
-| 4 | Sep 28–Oct 4 | 2 · Multimodal chatbot | Frontier APIs, Gradio UI | Gradio chatbot shell | ⚪ |
-| 5 | Oct 5–11 | 2 · Multimodal chatbot | Customer-service + multimodal agent | Chatbot project | ⚪ |
-| 6 | Oct 12–18 | 3 · Open source | Hugging Face, Ollama, local models | Local model run + notes | ⚪ |
-| 7 | Oct 19–25 | 3 · Open source | Automated solution with open-source | Meeting-minutes project | ⚪ |
-| 8 | Oct 26–Nov 1 | 4 · Model selection | Evaluate models for code and business tasks | Evaluation notebook | ⚪ |
-| 9 | Nov 2–8 | 4 · Model selection | Code-generation showdown | Code-gen comparison + pick | ⚪ |
-| 10 | Nov 9–15 | 5 · RAG | Embeddings, vector stores, LangChain | First RAG pipeline | ⚪ |
-| 11 | Nov 16–22 | 5 · RAG | Knowledge-worker project | End-to-end RAG app | ⚪ |
-| 12 | Nov 23–29 | 6 · Training | Data curation for fine-tuning | Curated dataset in repo | ⚪ |
-| 13 | Nov 30–Dec 6 | 6 · Training | Fine-tune a frontier model | Fine-tune run + eval notes | ⚪ |
-| 14 | Dec 7–13 | 7 · Fine-tuning OSS | QLoRA setup and training loop | QLoRA notebook | ⚪ |
-| 15 | Dec 14–20 | 7 · Fine-tuning OSS | Open-source vs frontier bake-off | Eval against base + frontier | ⚪ |
-| 16 | Dec 21–27 | 8 · Agentic system | Multi-agent architecture | Agent scaffolding | ⚪ |
-| 17 | Dec 28–Jan 3 | 8 · Agentic system | Capstone + certificate | Autonomous agent + certificate | ⚪ |
+| 1 | Aug 31–Sep 5 | 1 · First LLM product | Env, Chat Completions API, first notebook | Repo scaffold, website summarizer | ⚪ |
+| 2 | Sep 7–11 | 1 · First LLM product | Prompting; compare frontier models | Multi-model comparison note | ⚪ |
+| 3 | Sep 14–18 | 1 · First LLM product | Finish the week 1 commercial project | Runnable summarizer app | ⚪ |
+| 4 | Sep 21–25 | 2 · Multimodal chatbot | Frontier APIs, Gradio UI | Gradio chatbot shell | ⚪ |
+| 5 | Sep 28–Oct 2 | 2 · Multimodal chatbot | Customer-service + multimodal agent | Chatbot project | ⚪ |
+| 6 | Oct 5–9 | 3 · Open source | Hugging Face, Ollama, local models | Local model run + notes | ⚪ |
+| 7 | Oct 12–16 | 3 · Open source | Automated solution with open-source | Meeting-minutes project | ⚪ |
+| 8 | Oct 19–23 | 4 · Model selection | Evaluate models for code and business tasks | Evaluation notebook | ⚪ |
+| 9 | Oct 26–30 | 4 · Model selection | Code-generation showdown | Code-gen comparison + pick | ⚪ |
+| 10 | Nov 2–6 | 5 · RAG | Embeddings, vector stores, LangChain | First RAG pipeline | ⚪ |
+| 11 | Nov 9–13 | 5 · RAG | Knowledge-worker project | End-to-end RAG app | ⚪ |
+| 12 | Nov 16–20 | 6 · Training | Data curation for fine-tuning | Curated dataset in repo | ⚪ |
+| 13 | Nov 23–27 | 6 · Training | Fine-tune a frontier model | Fine-tune run + eval notes | ⚪ |
+| 14 | Nov 30–Dec 4 | 7 · Fine-tuning OSS | QLoRA setup and training loop | QLoRA notebook | ⚪ |
+| 15 | Dec 7–11 | 7 · Fine-tuning OSS | Open-source vs frontier bake-off | Eval against base + frontier | ⚪ |
+| 16 | Dec 14–18 | 8 · Agentic system | Multi-agent architecture | Agent scaffolding | ⚪ |
+| 17 | Dec 21–25 | 8 · Agentic system | Capstone + certificate | Autonomous agent + certificate | ⚪ |
 
 Legend: ⚪ not started · 🔵 in progress · ✅ done · ⏭️ skipped (reason in the log)
 

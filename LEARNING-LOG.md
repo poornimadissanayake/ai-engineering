@@ -17,7 +17,7 @@ Template:
 
 ---
 
-## Week 1 — 7–13 Sep 2026 · Core · Module 1 · First LLM product
+## Week 1 — 31 Aug–5 Sep 2026 · Core · Module 1 · First LLM product
 
 **Hours:**
 **Covered:**
