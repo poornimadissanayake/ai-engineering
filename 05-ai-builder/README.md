@@ -1,10 +1,9 @@
-# Phase 5 — AI Builder
+# Optional — AI Builder
 
-[Course](https://www.udemy.com/course/ai-builder-with-n8n-create-agents-voice-agents/) · 14.3 hrs · weeks 46–52 · Jul 19 – Sep 5, 2027
+[Course](https://www.udemy.com/course/ai-builder-with-n8n-create-agents-voice-agents/) · 14.3 hrs
 
-Low-code automation: n8n workflows and integrations, ElevenLabs voice agents, Supabase vector search, MCP inside n8n. Aimed at what a non-engineer at a portfolio company could run themselves.
+After the required path (Core → Agents → Production). Low-code automation: n8n workflows and integrations, ElevenLabs voice agents, Supabase vector search, MCP inside n8n.
 
 ## Status
 
-Not started. Week-by-week targets will be added here when this phase begins —
-see the plan and the [progress table](../README.md) for the current position.
+Not started. Optional after curriculum courses 4, 5 and 6.

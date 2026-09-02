@@ -40,7 +40,7 @@ node_modules/
 .turbo/
 npm-debug.log*
 
-# Terraform (Phase 3)
+# Terraform (Production Track)
 .terraform/
 *.tfstate
 *.tfstate.*
