@@ -1,6 +1,6 @@
 # Phase 3 — Production Track
 
-[Course](https://www.udemy.com/course/generative-and-agentic-ai-in-production/) · 18.7 hrs · weeks 29–37 · Mar 15 – May 14, 2027
+[Course](https://www.udemy.com/course/generative-and-agentic-ai-in-production/) · 18.7 hrs · weeks 29–37 · Mar 29 – May 28, 2027
 
 Curriculum course 6. Taking the Core and Agents work to production: FastAPI, Docker, cloud architecture (AWS, GCP, Azure), Terraform, CI/CD, observability (LangFuse), cost monitoring and guardrails.
 

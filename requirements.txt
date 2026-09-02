@@ -1,0 +1,8 @@
+# Mirrors pyproject.toml. Prefer: uv sync
+beautifulsoup4>=4.12.0
+gradio>=4.0.0
+ipykernel>=6.29.0
+jupyter>=1.0.0
+openai>=1.40.0
+python-dotenv>=1.0.0
+requests>=2.32.0

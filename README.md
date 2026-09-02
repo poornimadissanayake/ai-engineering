@@ -2,9 +2,30 @@
 
 My work through the [complete AI Engineering curriculum](https://edwarddonner.com/curriculum/) by Ed Donner, at a committed pace of **2 hours per week**.
 
-The required path is curriculum courses **4 → 5 → 6, in that order**: Core, then Agents, then Production. Every project here is runnable. Every week is logged. The progress table below is the status report.
+The required path is curriculum courses **4 → 5 → 6, in that order**: Core, then Agents, then Production. Validation is the projects — every one runnable, linked from the table below.
 
-**Started:** 31 August 2026 · **Pace:** 2 hrs/week · **Required path target:** May 2027
+**Started:** 31 August 2026 · **Pace:** 2 hrs/week · **Required path target:** late May 2027
+
+---
+
+## Projects
+
+What Ryan (or anyone) should scan first. Each row is a deliverable, not a lecture.
+
+| Project | Module | What it does | Link | Status |
+|---|---|---|---|---|
+| Website summarizer | Core 1 | Fetches a page, summarizes it via Chat Completions | [`01-llm-engineering/01-first-llm-product/`](01-llm-engineering/01-first-llm-product/) | ⚪ |
+| Multimodal chatbot | Core 2 | Gradio customer-service / multimodal agent | [`01-llm-engineering/02-multimodal-chatbot/`](01-llm-engineering/02-multimodal-chatbot/) | ⚪ |
+| Meeting minutes | Core 3 | Automated write-up on a local / open-source model | [`01-llm-engineering/03-open-source/`](01-llm-engineering/03-open-source/) | ⚪ |
+| Code-gen showdown | Core 4 | Same task across models; written pick and why | [`01-llm-engineering/04-model-selection/`](01-llm-engineering/04-model-selection/) | ⚪ |
+| RAG knowledge worker | Core 5 | Embeddings + vector store + LangChain Q&A | [`01-llm-engineering/05-rag/`](01-llm-engineering/05-rag/) | ⚪ |
+| Frontier fine-tune | Core 6 | Curated dataset and a fine-tuned frontier model | [`01-llm-engineering/06-training/`](01-llm-engineering/06-training/) | ⚪ |
+| QLoRA bake-off | Core 7 | Open-source QLoRA vs base vs frontier | [`01-llm-engineering/07-fine-tuning/`](01-llm-engineering/07-fine-tuning/) | ⚪ |
+| Autonomous agent | Core 8 | Multi-agent capstone + course certificate | [`01-llm-engineering/08-agents/`](01-llm-engineering/08-agents/) | ⚪ |
+
+Agents and Production projects get added here when those phases start.
+
+Legend: ⚪ not started · 🔵 in progress · ✅ done · ⏭️ watched at speed (project still built; note in the log)
 
 ---
 
@@ -28,7 +49,7 @@ The required path is curriculum courses **4 → 5 → 6, in that order**: Core, 
 
 | Wk | Dates | Module | Target | Built | Status |
 |---:|---|---|---|---|---|
-| 1 | Aug 31–Sep 5 | 1 · First LLM product | Env, Chat Completions API, first notebook | Repo scaffold, website summarizer | ⚪ |
+| 1 | Aug 31–Sep 4 | 1 · First LLM product | Env, Chat Completions API, first notebook | Repo scaffold, website summarizer | ⚪ |
 | 2 | Sep 7–11 | 1 · First LLM product | Prompting; compare frontier models | Multi-model comparison note | ⚪ |
 | 3 | Sep 14–18 | 1 · First LLM product | Finish the week 1 commercial project | Runnable summarizer app | ⚪ |
 | 4 | Sep 21–25 | 2 · Multimodal chatbot | Frontier APIs, Gradio UI | Gradio chatbot shell | ⚪ |
@@ -44,9 +65,9 @@ The required path is curriculum courses **4 → 5 → 6, in that order**: Core, 
 | 14 | Nov 30–Dec 4 | 7 · Fine-tuning OSS | QLoRA setup and training loop | QLoRA notebook | ⚪ |
 | 15 | Dec 7–11 | 7 · Fine-tuning OSS | Open-source vs frontier bake-off | Eval against base + frontier | ⚪ |
 | 16 | Dec 14–18 | 8 · Agentic system | Multi-agent architecture | Agent scaffolding | ⚪ |
-| 17 | Dec 21–25 | 8 · Agentic system | Capstone + certificate | Autonomous agent + certificate | ⚪ |
+| 17 | Jan 4–8 | 8 · Agentic system | Capstone + certificate | Autonomous agent + certificate | ⚪ |
 
-Legend: ⚪ not started · 🔵 in progress · ✅ done · ⏭️ skipped (reason in the log)
+Dec 21–Jan 1 is a holiday buffer. The capstone is the first full week of January, not Christmas week.
 
 ---
 
@@ -73,7 +94,7 @@ Legend: ⚪ not started · 🔵 in progress · ✅ done · ⏭️ skipped (reaso
 04-ai-coder/         optional — after 4, 5, 6
 05-ai-builder/       optional — after 4, 5, 6
 06-ai-leader/        optional — after 4, 5, 6
-LEARNING-LOG.md      one entry per week: covered, built, skipped, takeaways
+LEARNING-LOG.md      one entry per week: covered, built, watched at speed, takeaways
 ```
 
 Each project folder has its own README with what it does and how to run it.
@@ -89,6 +110,8 @@ cp .env.example .env        # add your own API keys
 uv sync                     # or: pip install -r requirements.txt
 ```
 
+`pyproject.toml` / `requirements.txt` cover the Core Track baseline (OpenAI, Jupyter, Gradio). Later modules that need heavier stacks (Hugging Face, QLoRA) add extras in that folder's README.
+
 Projects call frontier model APIs and need your own keys. Where a course offers a local
 alternative (Ollama, DeepSeek), the project README notes it.
 
@@ -99,13 +122,11 @@ variable names only.
 
 ## Why the phases are in this order
 
-The required path is Ed Donner's AI Engineer tracks **in curriculum order: 4, then 5, then 6** — Core, Agents, Production. Validation is the projects in this repo, not course-watching alone.
+The required path is Ed Donner's AI Engineer tracks **in curriculum order: 4, then 5, then 6** — Core, Agents, Production. Validation is the projects in this repo.
 
 Builder, Coder, and Leader sit after that. Azure, other clouds, and certs are fine once 4–6 are done.
 
-Sections covering ground I already work in daily are skipped deliberately rather than
-sat through — every skip is recorded in [LEARNING-LOG.md](LEARNING-LOG.md) with the reason,
-so the decision is auditable.
+Video I already work in daily I watch at speed. Every project still gets built. Anything treated that way is noted in [LEARNING-LOG.md](LEARNING-LOG.md).
 
 ---
 
