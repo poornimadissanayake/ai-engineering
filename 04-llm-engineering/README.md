@@ -1,8 +1,8 @@
-# Phase 1 — Core Track (LLM Engineering)
+# Phase 4 — Core Track (LLM Engineering)
 
-[Course](https://www.udemy.com/course/llm-engineering-master-ai-and-large-language-models/) · 33.5 hrs · weeks 1–17 · Aug 31, 2026 – Jan 8, 2027
+[Course](https://www.udemy.com/course/llm-engineering-master-ai-and-large-language-models/) · 33.5 hrs · weeks 19–35 · Jan 18 – May 14, 2027
 
-Curriculum course 4. Frontier and open-source models, model selection, RAG, data curation, QLoRA fine-tuning, then an autonomous multi-agent capstone.
+Curriculum course 4. Starts after AI Builder, AI Coder and AI Leader. Frontier and open-source models, model selection, RAG, data curation, QLoRA fine-tuning, then an autonomous multi-agent capstone.
 
 ## Modules
 

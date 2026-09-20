@@ -1,6 +1,6 @@
-# Phase 2 — Agentic Track
+# Phase 5 — Agentic Track
 
-[Course](https://www.udemy.com/course/the-complete-agentic-ai-engineering-course/) · 21.0 hrs · weeks 18–28 · Jan 11 – Mar 26, 2027
+[Course](https://www.udemy.com/course/the-complete-agentic-ai-engineering-course/) · 21.0 hrs · weeks 36–46 · May 17 – Jul 30, 2027
 
 Curriculum course 5. Agents from first principles, then five frameworks, then MCP. Eight projects, ending in an autonomous multi-agent capstone.
 

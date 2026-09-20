@@ -17,7 +17,7 @@ Template:
 
 ---
 
-## Week 1 — 31 Aug–4 Sep 2026 · Core · Module 1 · First LLM product
+## Week 1 — 31 Aug–4 Sep 2026 · AI Builder · Module 1 · Automate
 
 **Hours:**
 **Covered:**
