@@ -14,7 +14,7 @@ Each row is a project I build, not a lecture.
 
 | Project | Module | What it does | Link | Status |
 |---|---|---|---|---|
-| Portfolio rebalancer | Builder 1 | Monitors MarketStack prices and rebalances a Google Sheets portfolio | [`01-ai-builder/01-automate/`](01-ai-builder/01-automate/) | ⚪ |
+| Portfolio rebalancer | Builder 1 | Monitors MarketStack prices and rebalances a Google Sheets portfolio | [`01-ai-builder/01-automate/`](01-ai-builder/01-automate/) | 🔵 |
 | Voice agent | Builder 2 | ElevenLabs + Twilio phone agent answering from a Supabase RAG store | [`01-ai-builder/02-accelerate/`](01-ai-builder/02-accelerate/) | ⚪ |
 | GTM multi-agent system | Builder 3 | Finds leads via MCP, enriches them into Pipedrive, books demos | [`01-ai-builder/03-amplify/`](01-ai-builder/03-amplify/) | ⚪ |
 | Website summarizer | Core 1 | Fetches a page, summarizes it via Chat Completions | [`04-llm-engineering/01-first-llm-product/`](04-llm-engineering/01-first-llm-product/) | ⚪ |
@@ -54,7 +54,7 @@ The course runs as three "weeks" of five days, 88 lectures. At 2 hrs/week that i
 |---:|---|---|---|---|---|
 | 1 | Aug 31–Sep 4 | 1 · Automate | n8n Cloud setup; first agent on OpenRouter / OpenAI; what an agent actually is | First n8n agent workflow | ⚪ |
 | 2 | Sep 7–11 | 1 · Automate | Tool calling, evaluating agents; canvas, nodes, triggers; Sheets + Drive | Gmail draft-reply agent | ⚪ |
-| 3 | Sep 14–18 | 1 · Automate | JSON, expressions, OAuth2, webhooks; Telegram, Slack, Pushover; If nodes | Portfolio rebalancer — Project 1 | ⚪ |
+| 3 | Sep 14–18 | 1 · Automate | JSON, expressions, OAuth2, webhooks; Telegram, Slack, Pushover; If nodes | Portfolio rebalancer — Project 1 | 🔵 |
 | 4 | Sep 21–25 | 2 · Accelerate | ElevenLabs Agent Platform; agent tools, widgets, n8n webhooks | First voice agent | ⚪ |
 | 5 | Sep 28–Oct 2 | 2 · Accelerate | RAG and embeddings; Supabase vector store; Twilio phone number | Voice agent — Project 2 | ⚪ |
 | 6 | Oct 5–9 | 3 · Amplify | Cloud vs self-hosted; n8n on Docker; Ollama and DeepSeek | Self-hosted n8n instance | ⚪ |

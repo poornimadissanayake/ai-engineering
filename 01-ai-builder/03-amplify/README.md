@@ -1,5 +1,7 @@
 # Module 3 — Amplify
 
+33 lectures · 5hr 41min · weeks 6–8
+
 Multi-agent systems and MCP. Self-hosted n8n on Docker with Ollama and DeepSeek through OpenRouter,
 then Firecrawl scraping and PDF extraction, then MCP end to end — host, client and server, including
 writing my own server in n8n and connecting Claude to it. Closes on context engineering, the lethal

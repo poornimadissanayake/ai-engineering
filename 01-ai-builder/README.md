@@ -10,9 +10,9 @@ MCP and a multi-agent go-to-market capstone.
 
 ## Modules
 
-- [`01-automate/`](01-automate/) — Automate: workflows in n8n Cloud
-- [`02-accelerate/`](02-accelerate/) — Accelerate: voice agents and RAG
-- [`03-amplify/`](03-amplify/) — Amplify: multi-agent systems and MCP
+- [`01-automate/`](01-automate/) — Automate: workflows in n8n Cloud · 30 lectures · 4hr 58min
+- [`02-accelerate/`](02-accelerate/) — Accelerate: voice agents and RAG · 25 lectures · 3hr 42min
+- [`03-amplify/`](03-amplify/) — Amplify: multi-agent systems and MCP · 33 lectures · 5hr 41min
 
 ## Projects
 

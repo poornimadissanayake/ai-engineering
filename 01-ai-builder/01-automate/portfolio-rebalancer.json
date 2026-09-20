@@ -1,0 +1,365 @@
+{
+  "name": "Portfolio Rebalancer",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 17 * * 1-5"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        300
+      ],
+      "id": "d1ed4244-5770-5124-8d3c-b13005c7b010",
+      "name": "Daily After Close"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Portfolio",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        200,
+        300
+      ],
+      "id": "fa271aa3-1f02-5d6b-85b2-df29a9596607",
+      "name": "Get Portfolio"
+    },
+    {
+      "parameters": {
+        "jsCode": "// The Portfolio sheet gives one row per holding. Collapse them into a single\n// item carrying every ticker, so MarketStack gets called once and not N times.\nconst holdings = $input.all()\n  .map((item) => item.json)\n  .filter((h) => h.ticker !== undefined && h.ticker !== null && String(h.ticker).trim() !== '');\n\nif (holdings.length === 0) {\n  throw new Error('No rows with a \"ticker\" column in the Portfolio sheet.');\n}\n\nconst symbols = holdings.map((h) => String(h.ticker).trim().toUpperCase()).join(',');\n\nreturn [{ json: { symbols, holdings } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        400,
+        300
+      ],
+      "id": "891f1734-c301-54f3-a31a-48bf53dd7423",
+      "name": "Build Ticker List"
+    },
+    {
+      "parameters": {
+        "url": "http://api.marketstack.com/v1/eod/latest",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpQueryAuth",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "symbols",
+              "value": "={{ $json.symbols }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        620,
+        300
+      ],
+      "id": "2d55d969-a500-5c60-a2cf-38ab4fa16997",
+      "name": "Fetch Prices (MarketStack)"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Join MarketStack closes onto the portfolio and work out how far each holding\n// has drifted from its target weight.\nconst DRIFT_THRESHOLD = 0.05; // rebalance once a holding is 5 percentage points off\n\nconst holdings = $('Build Ticker List').first().json.holdings;\nconst rows = $input.first().json.data || [];\n\nif (rows.length === 0) {\n  throw new Error('MarketStack returned no price data. Check the access key and the symbols.');\n}\n\nconst priceBySymbol = {};\nlet asOf = null;\nfor (const row of rows) {\n  priceBySymbol[row.symbol] = row.close;\n  if (!asOf && row.date) asOf = String(row.date).slice(0, 10);\n}\n\nconst positions = holdings.map((h) => {\n  const ticker = String(h.ticker).trim().toUpperCase();\n  const price = priceBySymbol[ticker];\n  if (price === undefined) {\n    throw new Error(`MarketStack returned no price for ${ticker}.`);\n  }\n  const shares = Number(h.shares);\n  const target = Number(h.target_weight);\n  if (Number.isNaN(shares) || Number.isNaN(target)) {\n    throw new Error(`Bad shares or target_weight for ${ticker}.`);\n  }\n  return { ticker, name: h.name || ticker, shares, price, value: shares * price, target_weight: target };\n});\n\nconst total = positions.reduce((sum, p) => sum + p.value, 0);\nif (total <= 0) {\n  throw new Error('Portfolio total value is zero — check the shares column.');\n}\n\nconst priced = positions.map((p) => {\n  const currentWeight = p.value / total;\n  const drift = currentWeight - p.target_weight;\n  const targetValue = total * p.target_weight;\n  const sharesDelta = Math.round((targetValue - p.value) / p.price);\n  const action = Math.abs(drift) > DRIFT_THRESHOLD ? (sharesDelta > 0 ? 'BUY' : 'SELL') : 'HOLD';\n  return {\n    date: asOf,\n    ticker: p.ticker,\n    name: p.name,\n    price: Number(p.price.toFixed(2)),\n    shares: p.shares,\n    current_value: Number(p.value.toFixed(2)),\n    current_weight_pct: Number((currentWeight * 100).toFixed(2)),\n    target_weight_pct: Number((p.target_weight * 100).toFixed(2)),\n    drift_pts: Number((drift * 100).toFixed(2)),\n    action,\n    shares_delta: action === 'HOLD' ? 0 : sharesDelta,\n  };\n});\n\nconst needsRebalance = priced.some((p) => p.action !== 'HOLD');\n\nconst summary = [\n  `Portfolio as of ${asOf}. Total value ${total.toFixed(2)}.`,\n  `Drift threshold ${(DRIFT_THRESHOLD * 100).toFixed(0)} percentage points.`,\n  '',\n  ...priced.map(\n    (p) =>\n      `${p.ticker}: ${p.shares} @ ${p.price} = ${p.current_value} ` +\n      `(${p.current_weight_pct}% vs target ${p.target_weight_pct}%, drift ${p.drift_pts} pts) ` +\n      `-> ${p.action} ${p.shares_delta}`,\n  ),\n].join('\\n');\n\nreturn [{\n  json: {\n    as_of: asOf,\n    total_value: Number(total.toFixed(2)),\n    needs_rebalance: needsRebalance,\n    summary_text: summary,\n    positions: priced,\n  },\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        840,
+        300
+      ],
+      "id": "447999cd-67d3-5c1a-9bac-bb825f6e76b0",
+      "name": "Compute Drift"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "needs-rebalance",
+              "leftValue": "={{ $json.needs_rebalance }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1060,
+        300
+      ],
+      "id": "c6ca2116-ab16-5812-9c20-cb10d974744d",
+      "name": "Rebalance Needed?"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.summary_text }}",
+        "options": {
+          "systemMessage": "You are a portfolio operations assistant. You are given a plain-text summary of a portfolio's current weights against its targets, with a suggested BUY/SELL/HOLD per holding already computed arithmetically.\n\nDo not recompute the numbers and do not invent new ones. Write a short note (4 sentences at most) that states which holdings are out of band and what the suggested trades are, and flags anything odd — a holding dominating the portfolio, a drift far larger than the rest, or a suspicious price.\n\nThis is a workflow exercise, not investment advice. End with: 'Suggested only — review before trading.'"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        1300,
+        180
+      ],
+      "id": "c62f87aa-6dca-54a6-ba42-0fb162340379",
+      "name": "Rebalance Analyst"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        1320,
+        400
+      ],
+      "id": "78f043f4-f786-5c39-8322-9dbbdf5d165f",
+      "name": "OpenAI Chat Model"
+    },
+    {
+      "parameters": {
+        "userKey": "YOUR_PUSHOVER_USER_KEY",
+        "message": "={{ $json.output }}",
+        "additionalFields": {
+          "title": "Portfolio rebalance suggested"
+        }
+      },
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        1560,
+        180
+      ],
+      "id": "d1a02cc6-0edd-5726-b47c-50d549ad169b",
+      "name": "Notify (Pushover)"
+    },
+    {
+      "parameters": {
+        "jsCode": "// One row per holding for the Rebalance Log sheet.\nconst drift = $('Compute Drift').first().json;\nreturn drift.positions.map((p) => ({ json: p }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1780,
+        180
+      ],
+      "id": "7719eead-31fe-5316-b1fe-8361fbe2381f",
+      "name": "Expand Positions"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Rebalance Log",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": []
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        2000,
+        180
+      ],
+      "id": "fdcce921-bdc8-5ea4-a027-70ed29e46f0b",
+      "name": "Log to Sheet"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1300,
+        560
+      ],
+      "id": "76d405c6-8b19-5a5b-a85d-b1e3803ee41e",
+      "name": "No Action Needed"
+    }
+  ],
+  "connections": {
+    "Daily After Close": {
+      "main": [
+        [
+          {
+            "node": "Get Portfolio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Portfolio": {
+      "main": [
+        [
+          {
+            "node": "Build Ticker List",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Ticker List": {
+      "main": [
+        [
+          {
+            "node": "Fetch Prices (MarketStack)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Prices (MarketStack)": {
+      "main": [
+        [
+          {
+            "node": "Compute Drift",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Compute Drift": {
+      "main": [
+        [
+          {
+            "node": "Rebalance Needed?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rebalance Needed?": {
+      "main": [
+        [
+          {
+            "node": "Rebalance Analyst",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Action Needed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rebalance Analyst": {
+      "main": [
+        [
+          {
+            "node": "Notify (Pushover)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Notify (Pushover)": {
+      "main": [
+        [
+          {
+            "node": "Expand Positions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Expand Positions": {
+      "main": [
+        [
+          {
+            "node": "Log to Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Rebalance Analyst",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": ""
+  }
+}

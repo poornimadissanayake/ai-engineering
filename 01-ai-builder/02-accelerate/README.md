@@ -1,5 +1,7 @@
 # Module 2 — Accelerate
 
+25 lectures · 3hr 42min · weeks 4–5
+
 Voice agents and RAG. The ElevenLabs Agent Platform — agent tools, widgets, multi-agent voice
 workflows — wired to n8n over webhooks. Then RAG properly: embeddings, vector search, and agentic
 vs. traditional retrieval, built on a Supabase vector store with OpenAI embeddings. Ends with a
