@@ -44,11 +44,13 @@ One spreadsheet, two tabs.
 | MSFT | Microsoft | 30 | 0.30 |
 | GOOGL | Alphabet | 20 | 0.40 |
 
-**`Rebalance Log`** — written by the workflow. Create it with just this header row:
+**`Rebalance Log`** — written by the workflow. Header row only to start with.
 
-```
-date · ticker · name · price · shares · current_value · current_weight_pct · target_weight_pct · drift_pts · action · shares_delta
-```
+Both tabs are here as CSVs, so the sheet is an import rather than typing columns by hand:
+[`portfolio-template.csv`](portfolio-template.csv) and
+[`rebalance-log-template.csv`](rebalance-log-template.csv). In Google Sheets, File → Import →
+Upload, and choose "Insert new sheet", then rename the tabs to `Portfolio` and `Rebalance Log`.
+The holdings above are placeholders — swap in your own.
 
 ### Setup
 

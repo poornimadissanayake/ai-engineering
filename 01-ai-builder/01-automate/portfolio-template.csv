@@ -1,0 +1,4 @@
+ticker,name,shares,target_weight
+AAPL,Apple,50,0.30
+MSFT,Microsoft,30,0.30
+GOOGL,Alphabet,20,0.40
