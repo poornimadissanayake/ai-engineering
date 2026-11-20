@@ -14,9 +14,13 @@ Each row is a project I build, not a lecture.
 
 | Project | Module | What it does | Link | Status |
 |---|---|---|---|---|
-| Portfolio rebalancer | Builder 1 | Monitors MarketStack prices and rebalances a Google Sheets portfolio | [`01-ai-builder/01-automate/`](01-ai-builder/01-automate/) | 🔵 |
-| Voice agent | Builder 2 | ElevenLabs + Twilio phone agent answering from a Supabase RAG store | [`01-ai-builder/02-accelerate/`](01-ai-builder/02-accelerate/) | ⚪ |
-| GTM multi-agent system | Builder 3 | Finds leads via MCP, enriches them into Pipedrive, books demos | [`01-ai-builder/03-amplify/`](01-ai-builder/03-amplify/) | ⚪ |
+| Portfolio rebalancer | Builder 1 | Monitors MarketStack prices and rebalances a Google Sheets portfolio | [`01-ai-builder/01-automate/`](01-ai-builder/01-automate/) | 🟡 |
+| Voice agent | Builder 2 | ElevenLabs + Twilio phone agent answering from a Supabase RAG store | [`01-ai-builder/02-accelerate/`](01-ai-builder/02-accelerate/) | 🟡 |
+| GTM multi-agent system | Builder 3 | Finds leads via MCP, enriches them into Pipedrive, books demos | [`01-ai-builder/03-amplify/`](01-ai-builder/03-amplify/) | 🟡 |
+| Digital twin website | Coder 1 | Next.js personal site with a chat that answers as me, via OpenRouter | [`02-ai-coder/01-digital-twin/`](02-ai-coder/01-digital-twin/) | 🟡 |
+| Kanban you can chat with | Coder 2 | FastAPI + SQLite board; an assistant moves cards through tool calls | [`02-ai-coder/02-kanban/`](02-ai-coder/02-kanban/) | 🟡 |
+| Legal assistant SaaS | Coder 3 | Drafts consulting agreements, PDF download, built ticket by ticket | — | ⚪ |
+| Trading workstation | Coder 4 | Capstone: live market data, virtual trades, AI assistant | — | ⚪ |
 | Website summarizer | Core 1 | Fetches a page, summarizes it via Chat Completions | [`04-llm-engineering/01-first-llm-product/`](04-llm-engineering/01-first-llm-product/) | ⚪ |
 | Multimodal chatbot | Core 2 | Gradio customer-service / multimodal agent | [`04-llm-engineering/02-multimodal-chatbot/`](04-llm-engineering/02-multimodal-chatbot/) | ⚪ |
 | Meeting minutes | Core 3 | Automated write-up on a local / open-source model | [`04-llm-engineering/03-open-source/`](04-llm-engineering/03-open-source/) | ⚪ |
@@ -26,9 +30,9 @@ Each row is a project I build, not a lecture.
 | QLoRA bake-off | Core 7 | Open-source QLoRA vs base vs frontier | [`04-llm-engineering/07-fine-tuning/`](04-llm-engineering/07-fine-tuning/) | ⚪ |
 | Autonomous agent | Core 8 | Multi-agent capstone + course certificate | [`04-llm-engineering/08-agents/`](04-llm-engineering/08-agents/) | ⚪ |
 
-Coder, Leader, Agents and Production projects get added here when those phases start.
+Leader, Agents and Production projects get added here when those phases start.
 
-Legend: ⚪ not started · 🔵 in progress · ✅ done · ⏭️ watched at speed (project still built; note in the log)
+Legend: ⚪ not started · 🔵 in progress · 🟡 built, still to run end to end on my own accounts · ✅ done · ⏭️ watched at speed (project still built; note in the log)
 
 ---
 
@@ -36,8 +40,8 @@ Legend: ⚪ not started · 🔵 in progress · ✅ done · ⏭️ watched at spe
 
 | Phase | Course | Hours | Weeks | Status |
 |---|---|---:|---|---|
-| 1 | [AI Builder](https://www.udemy.com/course/ai-builder-with-n8n-create-agents-voice-agents/) — n8n, voice agents, MCP | 14.3 | 1–8 | 🔵 In progress |
-| 2 | [AI Coder](https://www.udemy.com/course/ai-coder-from-vibe-coder-to-agentic-engineer/) — Claude Code, sub-agents, swarms | 16.3 | 9–16 | ⚪ Not started |
+| 1 | [AI Builder](https://www.udemy.com/course/ai-builder-with-n8n-create-agents-voice-agents/) — n8n, voice agents, MCP | 14.3 | 1–8 | 🟡 Built — lectures and live runs to finish |
+| 2 | [AI Coder](https://www.udemy.com/course/ai-coder-from-vibe-coder-to-agentic-engineer/) — Claude Code, sub-agents, swarms | 16.3 | 9–16 | 🔵 In progress — week 12 |
 | 3 | [AI Leader](https://www.udemy.com/course/executive-briefing-generative-ai-and-large-language-models-llm/) — strategy, roadmaps | 3.8 | 17–18 | ⚪ Not started |
 | 4 | [Core Track](https://www.udemy.com/course/llm-engineering-master-ai-and-large-language-models/) — LLMs, RAG, LangChain, fine-tuning | 33.5 | 19–35 | ⚪ Not started |
 | 5 | [Agentic Track](https://www.udemy.com/course/the-complete-agentic-ai-engineering-course/) — agent loops, CrewAI, LangGraph, MCP | 21.0 | 36–46 | ⚪ Not started |
@@ -49,17 +53,19 @@ the week before, AI Leader starts the first full week of January.
 ### Phase 1 — AI Builder, week by week
 
 The course runs as three "weeks" of five days, 88 lectures. At 2 hrs/week that is eight of mine.
+Every lecture, by week, with a tick box: [`01-ai-builder/TASKS.md`](01-ai-builder/TASKS.md). AI Coder's
+week-by-week plan is in [`02-ai-coder/README.md`](02-ai-coder/README.md).
 
 | Wk | Dates | Module | Target | Built | Status |
 |---:|---|---|---|---|---|
-| 1 | Aug 31–Sep 4 | 1 · Automate | n8n Cloud setup; first agent on OpenRouter / OpenAI; what an agent actually is | First n8n agent workflow | ⚪ |
-| 2 | Sep 7–11 | 1 · Automate | Tool calling, evaluating agents; canvas, nodes, triggers; Sheets + Drive | Gmail draft-reply agent | ⚪ |
-| 3 | Sep 14–18 | 1 · Automate | JSON, expressions, OAuth2, webhooks; Telegram, Slack, Pushover; If nodes | Portfolio rebalancer — Project 1 | 🔵 |
-| 4 | Sep 21–25 | 2 · Accelerate | ElevenLabs Agent Platform; agent tools, widgets, n8n webhooks | First voice agent | ⚪ |
-| 5 | Sep 28–Oct 2 | 2 · Accelerate | RAG and embeddings; Supabase vector store; Twilio phone number | Voice agent — Project 2 | ⚪ |
-| 6 | Oct 5–9 | 3 · Amplify | Cloud vs self-hosted; n8n on Docker; Ollama and DeepSeek | Self-hosted n8n instance | ⚪ |
-| 7 | Oct 12–16 | 3 · Amplify | Firecrawl, PDF extraction; MCP host / client / server; Hunter.io | My own MCP server in n8n | ⚪ |
-| 8 | Oct 19–23 | 3 · Amplify | Context engineering, the lethal trifecta; Pipedrive SDR; sub-workflows | GTM capstone — Project 3 + certificate | ⚪ |
+| 1 | Aug 31–Sep 4 | 1 · Automate | n8n Cloud setup; first agent on OpenRouter / OpenAI; what an agent actually is | First n8n agent workflow | 🟡 |
+| 2 | Sep 7–11 | 1 · Automate | Tool calling, evaluating agents; canvas, nodes, triggers; Sheets + Drive | Gmail draft-reply agent | 🟡 |
+| 3 | Sep 14–18 | 1 · Automate | JSON, expressions, OAuth2, webhooks; Telegram, Slack, Pushover; If nodes | Portfolio rebalancer — Project 1 | 🟡 |
+| 4 | Sep 21–25 | 2 · Accelerate | ElevenLabs Agent Platform; agent tools, widgets, n8n webhooks | First voice agent | 🟡 |
+| 5 | Sep 28–Oct 2 | 2 · Accelerate | RAG and embeddings; Supabase vector store; Twilio phone number | Voice agent — Project 2 | 🟡 |
+| 6 | Oct 5–9 | 3 · Amplify | Cloud vs self-hosted; n8n on Docker; Ollama and DeepSeek | Self-hosted n8n instance | 🟡 |
+| 7 | Oct 12–16 | 3 · Amplify | Firecrawl, PDF extraction; MCP host / client / server; Hunter.io | My own MCP server in n8n | 🟡 |
+| 8 | Oct 19–23 | 3 · Amplify | Context engineering, the lethal trifecta; Pipedrive SDR; sub-workflows | GTM capstone — Project 3 + certificate | 🟡 |
 
 ---
 
