@@ -161,21 +161,21 @@ _Course week 2, day 5_
 
 _Course week 3, day 1_
 
-- [ ] n8n Cloud vs Self-Hosted: Which Deployment Option is Best for You? · 11m
-- [ ] How to Install n8n Locally with Docker Desktop Step-by-Step Guide · 9m
-- [ ] Docker Installation Tutorial: Set Up n8n on Your Computer Locally · 9m
-- [ ] How to Run n8n with Docker: Setup Self-Hosted n8n Instance · 8m
-- [ ] How to Setup Self-Hosted n8n AI Agent with DeepSeek and OpenRouter · 11m
-- [ ] How to Integrate Ollama with Self-Hosted n8n for Local AI Workflows · 10m
+- [x] n8n Cloud vs Self-Hosted: Which Deployment Option is Best for You? · 11m
+- [x] How to Install n8n Locally with Docker Desktop Step-by-Step Guide · 9m
+- [x] Docker Installation Tutorial: Set Up n8n on Your Computer Locally · 9m
+- [x] How to Run n8n with Docker: Setup Self-Hosted n8n Instance · 8m
+- [x] How to Setup Self-Hosted n8n AI Agent with DeepSeek and OpenRouter · 11m
+- [x] How to Integrate Ollama with Self-Hosted n8n for Local AI Workflows · 10m
 
 _Course week 3, day 2_
 
-- [ ] Advanced n8n Integrations: API Webhooks and OAuth Setup Tutorial · 13m
-- [ ] How to set up Google OAuth2 credentials for n8n workflow · 10m
-- [ ] How to Set Up Google Drive Trigger in n8n with OAuth2 Authentication · 9m
-- [ ] How to Extract Text from PDF Files Using n8n Workflow Automation · 10m
-- [ ] Firecrawl API Integration: Web Scraping Workflow with n8n · 11m
-- [ ] n8n Structured Output Parser and HTTP Request Workflow Automation · 7m
+- [x] Advanced n8n Integrations: API Webhooks and OAuth Setup Tutorial · 13m
+- [x] How to set up Google OAuth2 credentials for n8n workflow · 10m
+- [x] How to Set Up Google Drive Trigger in n8n with OAuth2 Authentication · 9m
+- [x] How to Extract Text from PDF Files Using n8n Workflow Automation · 10m
+- [x] Firecrawl API Integration: Web Scraping Workflow with n8n · 11m
+- [x] n8n Structured Output Parser and HTTP Request Workflow Automation · 7m
 
 **Build**
 
@@ -192,22 +192,22 @@ _Course week 3, day 2_
 
 _Course week 3, day 3_
 
-- [ ] What is MCP Model Context Protocol for AI Agents and Integration · 9m
-- [ ] n8n MCP Integration: Host, Client, and Server Explained · 11m
-- [ ] How to Use MCP with n8n AI Agent Workflows for Sales Automation · 12m
-- [ ] How to Connect Firecrawl MCP Server to n8n AI Agent Workflows · 11m
-- [ ] n8n MCP Client Tool Integration with Hunter.io API Tutorial · 11m
-- [ ] How to Build an MCP Server in n8n: Step-by-Step Workflow Tutorial · 11m
-- [ ] How to Build an MCP Server in n8n and Connect to Claude AI · 10m
+- [x] What is MCP Model Context Protocol for AI Agents and Integration · 9m
+- [x] n8n MCP Integration: Host, Client, and Server Explained · 11m
+- [x] How to Use MCP with n8n AI Agent Workflows for Sales Automation · 12m
+- [x] How to Connect Firecrawl MCP Server to n8n AI Agent Workflows · 11m
+- [x] n8n MCP Client Tool Integration with Hunter.io API Tutorial · 11m
+- [x] How to Build an MCP Server in n8n: Step-by-Step Workflow Tutorial · 11m
+- [x] How to Build an MCP Server in n8n and Connect to Claude AI · 10m
 
 _Course week 3, day 4_
 
-- [ ] Building Bulletproof AI Agents: JSON Structure and LLM Output Control · 7m
-- [ ] Context Engineering for AI Agents: Optimization Best Practices · 13m
-- [ ] Lethal Trifecta for AI Agents: Security Risks in Agentic AI Systems · 12m
-- [ ] Automate Sales Pipeline with Pipedrive CRM and n8n Workflow Integration · 10m
-- [ ] N8N Structured Output vs Tools: Building AI Workflow Automation · 14m
-- [ ] Build AI Sales Agents in n8n: SDR Automation with Pipedrive Integration · 13m
+- [x] Building Bulletproof AI Agents: JSON Structure and LLM Output Control · 7m
+- [x] Context Engineering for AI Agents: Optimization Best Practices · 13m
+- [x] Lethal Trifecta for AI Agents: Security Risks in Agentic AI Systems · 12m
+- [x] Automate Sales Pipeline with Pipedrive CRM and n8n Workflow Integration · 10m
+- [x] N8N Structured Output vs Tools: Building AI Workflow Automation · 14m
+- [x] Build AI Sales Agents in n8n: SDR Automation with Pipedrive Integration · 13m
 
 **Build**
 
@@ -222,13 +222,13 @@ _Course week 3, day 4_
 
 _Course week 3, day 5_
 
-- [ ] AI Sales Automation: Creating Sub-Workflows in n8n Step-by-Step · 11m
-- [ ] Automate Lead Generation Using n8n AI Agent and CRM Integration · 12m
-- [ ] AI Agent Orchestration Tutorial: Multi-Agent System for Sales Leads · 11m
-- [ ] Building AI Sales Agent with Pipedrive Integration in n8n Tutorial · 10m
-- [ ] Build AI Agent Demo Booking System with n8n and Google Calendar · 12m
-- [ ] Build AI Voice Agent with ElevenLabs and N8N CRM Integration Tutorial · 9m
-- [ ] AI Automation Capstone: Deploy Voice Agent CRM Workflow with n8n · 11m
+- [x] AI Sales Automation: Creating Sub-Workflows in n8n Step-by-Step · 11m
+- [x] Automate Lead Generation Using n8n AI Agent and CRM Integration · 12m
+- [x] AI Agent Orchestration Tutorial: Multi-Agent System for Sales Leads · 11m
+- [x] Building AI Sales Agent with Pipedrive Integration in n8n Tutorial · 10m
+- [x] Build AI Agent Demo Booking System with n8n and Google Calendar · 12m
+- [x] Build AI Voice Agent with ElevenLabs and N8N CRM Integration Tutorial · 9m
+- [x] AI Automation Capstone: Deploy Voice Agent CRM Workflow with n8n · 11m
 
 _Bonus_
 
