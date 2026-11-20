@@ -17,13 +17,13 @@ for real — that is what makes the project done.
 
 _Course week 1, day 1_
 
-- [ ] Build Your First AI Agent with n8n and OpenRouter (No-Code Tutorial) · 12m
-- [ ] Build AI Agents with n8n: Agentic AI Workflow Automation Framework · 7m
-- [ ] Your Complete Path to Building Real AI Tools for Your Business · 4m
-- [ ] Build AI Agents with n8n: Complete Learning Roadmap & Workflow Setup · 12m
-- [ ] What is an AI Agent? Understanding Agentic Workflows in n8n · 9m
-- [ ] OpenAI API Setup: Cost Optimization and Free Alternatives Guide · 12m
-- [ ] How to Build an AI Agent with n8n and OpenAI API Integration · 13m
+- [x] Build Your First AI Agent with n8n and OpenRouter (No-Code Tutorial) · 12m
+- [x] Build AI Agents with n8n: Agentic AI Workflow Automation Framework · 7m
+- [x] Your Complete Path to Building Real AI Tools for Your Business · 4m
+- [x] Build AI Agents with n8n: Complete Learning Roadmap & Workflow Setup · 12m
+- [x] What is an AI Agent? Understanding Agentic Workflows in n8n · 9m
+- [x] OpenAI API Setup: Cost Optimization and Free Alternatives Guide · 12m
+- [x] How to Build an AI Agent with n8n and OpenAI API Integration · 13m
 
 **Build**
 
@@ -38,19 +38,19 @@ _Course week 1, day 1_
 
 _Course week 1, day 2_
 
-- [ ] Understanding Agentic AI: How AI Agents Work with LLMs and Prompts · 7m
-- [ ] How LLMs Create Illusion of Memory and Reasoning Capabilities in AI · 12m
-- [ ] How Tool Calling Works in Agentic AI Systems and LLM Workflows · 8m
-- [ ] How to Evaluate AI Agents: Stop Anthropomorphizing LLMs in Workflows · 5m
-- [ ] How to Navigate n8n Cloud: Admin Panel, Instance, and Canvas Tutorial · 10m
-- [ ] How to Build AI Workflows with n8n: Nodes, Triggers, and Automation · 12m
+- [x] Understanding Agentic AI: How AI Agents Work with LLMs and Prompts · 7m
+- [x] How LLMs Create Illusion of Memory and Reasoning Capabilities in AI · 12m
+- [x] How Tool Calling Works in Agentic AI Systems and LLM Workflows · 8m
+- [x] How to Evaluate AI Agents: Stop Anthropomorphizing LLMs in Workflows · 5m
+- [x] How to Navigate n8n Cloud: Admin Panel, Instance, and Canvas Tutorial · 10m
+- [x] How to Build AI Workflows with n8n: Nodes, Triggers, and Automation · 12m
 
 _Course week 1, day 3_
 
-- [ ] How to Integrate Google Sheets and Google Drive with n8n Workflows · 7m
-- [ ] How to Build an AI Workflow in n8n with Google Drive Integration · 6m
-- [ ] How to Automate Stock Portfolio Tracker with n8n and Google Sheets · 11m
-- [ ] How to Build an AI Agent to Automatically Draft Gmail Replies in n8n · 11m
+- [x] How to Integrate Google Sheets and Google Drive with n8n Workflows · 7m
+- [x] How to Build an AI Workflow in n8n with Google Drive Integration · 6m
+- [x] How to Automate Stock Portfolio Tracker with n8n and Google Sheets · 11m
+- [x] How to Build an AI Agent to Automatically Draft Gmail Replies in n8n · 11m
 
 **Build**
 
@@ -65,22 +65,22 @@ _Course week 1, day 3_
 
 _Course week 1, day 4_
 
-- [ ] Understanding JSON in n8n: Key-Value Pairs, Objects, and Arrays · 9m
-- [ ] n8n Authentication Methods: API Keys, OAuth2, and Workflow Integration · 13m
-- [ ] How to Integrate Pushover Notifications with n8n Workflows · 7m
-- [ ] Create Telegram Bot Using n8n: Complete AI Chatbot Integration Tutorial · 11m
-- [ ] How to Integrate Telegram Bot with n8n AI Agent Workflow Automation · 11m
-- [ ] How to Build a Slack Bot with n8n OAuth Integration and Automation · 10m
-- [ ] Connect Slack to n8n Using OAuth2 and Webhook Triggers Step-by-Step · 14m
+- [x] Understanding JSON in n8n: Key-Value Pairs, Objects, and Arrays · 9m
+- [x] n8n Authentication Methods: API Keys, OAuth2, and Workflow Integration · 13m
+- [x] How to Integrate Pushover Notifications with n8n Workflows · 7m
+- [x] Create Telegram Bot Using n8n: Complete AI Chatbot Integration Tutorial · 11m
+- [x] How to Integrate Telegram Bot with n8n AI Agent Workflow Automation · 11m
+- [x] How to Build a Slack Bot with n8n OAuth Integration and Automation · 10m
+- [x] Connect Slack to n8n Using OAuth2 and Webhook Triggers Step-by-Step · 14m
 
 _Course week 1, day 5_
 
-- [ ] n8n JSON Workflow Tutorial: Webhooks, Authentication & Integration · 9m
-- [ ] n8n Node Types Explained: Core Nodes, Subnodes, and Cluster Nodes · 10m
-- [ ] Build an AI-Powered Portfolio Rebalancer Using N8N and Google Sheets · 9m
-- [ ] Agentic AI Workflow Automation: Balance Autonomy and Instructions · 10m
-- [ ] How to Integrate Gmail and Pushover Notifications with n8n AI Agent · 10m
-- [ ] n8n Workflow Automation: Using If Nodes for Conditional Logic · 14m
+- [x] n8n JSON Workflow Tutorial: Webhooks, Authentication & Integration · 9m
+- [x] n8n Node Types Explained: Core Nodes, Subnodes, and Cluster Nodes · 10m
+- [x] Build an AI-Powered Portfolio Rebalancer Using N8N and Google Sheets · 9m
+- [x] Agentic AI Workflow Automation: Balance Autonomy and Instructions · 10m
+- [x] How to Integrate Gmail and Pushover Notifications with n8n AI Agent · 10m
+- [x] n8n Workflow Automation: Using If Nodes for Conditional Logic · 14m
 
 **Build**
 
