@@ -1,0 +1,3 @@
+# Generated build output (node_modules/, .next/ and .env* are ignored at the repo root)
+*.tsbuildinfo
+next-env.d.ts
