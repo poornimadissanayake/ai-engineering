@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kanban Chat</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1>Kanban Chat</h1>
+    <span id="status" class="status" role="status"></span>
+  </header>
+
+  <main class="layout">
+    <section id="board" class="board" aria-label="Board"></section>
+
+    <aside class="chat" aria-label="Assistant">
+      <h2>Assistant</h2>
+      <div id="chat-log" class="chat-log" aria-live="polite">
+        <p class="msg note">Ask me to add, move, rename or delete cards, or what's where. Try “move the login bug to done”.</p>
+      </div>
+      <form id="chat-form" class="chat-form">
+        <textarea id="chat-input" rows="2" placeholder="Message the board…" required></textarea>
+        <button type="submit">Send</button>
+      </form>
+    </aside>
+  </main>
+
+  <dialog id="card-dialog">
+    <form id="card-form" method="dialog">
+      <h2>Edit card</h2>
+      <label>Title <input name="title" required maxlength="200"></label>
+      <label>Description <textarea name="description" rows="4" maxlength="5000"></textarea></label>
+      <div class="dialog-actions">
+        <button type="button" id="delete-card" class="danger">Delete</button>
+        <span class="spacer"></span>
+        <button type="button" id="cancel-card">Cancel</button>
+        <button type="submit" class="primary">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <template id="column-template">
+    <section class="column">
+      <header class="column-header"><h2></h2><span class="count"></span></header>
+      <ul class="cards"></ul>
+      <form class="add-card">
+        <input name="title" placeholder="+ Add a card" maxlength="200" required>
+      </form>
+    </section>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>

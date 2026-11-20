@@ -1,0 +1,16 @@
+services:
+  kanban:
+    build: .
+    ports:
+      - "8000:8000"
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      KANBAN_DB: /data/kanban.db
+    volumes:
+      - kanban-data:/data
+    restart: unless-stopped
+
+volumes:
+  kanban-data:

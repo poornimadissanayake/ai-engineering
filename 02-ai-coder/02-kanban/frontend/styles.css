@@ -1,0 +1,226 @@
+:root {
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --column: #ebecf0;
+  --text: #172b4d;
+  --muted: #5e6c84;
+  --border: #d0d4db;
+  --accent: #2f6fdb;
+  --accent-text: #ffffff;
+  --danger: #c9372c;
+  --user-bubble: #dbe7fb;
+  --shadow: 0 1px 2px rgba(9, 30, 66, 0.2);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1d2125;
+    --surface: #2c333a;
+    --column: #22272b;
+    --text: #dee4ea;
+    --muted: #9fadbc;
+    --border: #3b444c;
+    --accent: #579dff;
+    --accent-text: #1d2125;
+    --danger: #f87168;
+    --user-bubble: #1c3a66;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font: 15px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button, input, textarea { font: inherit; color: inherit; }
+
+.topbar {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+}
+.topbar h1 { margin: 0; font-size: 1.25rem; }
+.status { color: var(--danger); font-size: 0.9rem; }
+
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: 1rem;
+  padding: 0 1rem 1rem;
+  height: calc(100vh - 3.5rem);
+}
+
+/* ---------- board ---------- */
+
+.board {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  align-items: flex-start;
+}
+
+.column {
+  flex: 0 0 272px;
+  background: var(--column);
+  border-radius: 10px;
+  padding: 0.5rem;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid transparent;
+}
+.column.drag-over { border-color: var(--accent); }
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.25rem 0.5rem 0.5rem;
+}
+.column-header h2 { margin: 0; font-size: 0.95rem; }
+.count { color: var(--muted); font-size: 0.85rem; }
+
+.cards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  min-height: 2.5rem;  /* an empty column still needs a drop target */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.card {
+  background: var(--surface);
+  border-radius: 8px;
+  padding: 0.6rem 0.7rem;
+  box-shadow: var(--shadow);
+  cursor: grab;
+}
+.card:focus-visible { outline: 2px solid var(--accent); }
+.card.dragging { opacity: 0.4; }
+.card-title { font-weight: 500; overflow-wrap: anywhere; }
+.card-desc {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 0.25rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.drop-marker {
+  height: 4px;
+  border-radius: 2px;
+  background: var(--accent);
+  pointer-events: none;
+}
+
+.add-card { margin-top: 0.5rem; }
+.add-card input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+}
+.add-card input:focus { background: var(--surface); border-color: var(--accent); outline: none; }
+
+/* ---------- chat ---------- */
+
+.chat {
+  background: var(--surface);
+  border-radius: 10px;
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  box-shadow: var(--shadow);
+}
+.chat h2 { margin: 0 0 0.5rem; font-size: 1rem; }
+
+.chat-log {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.msg {
+  margin: 0;
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  max-width: 90%;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.msg small { display: block; color: var(--muted); font-size: 0.75rem; margin-top: 0.25rem; }
+.msg.user { align-self: flex-end; background: var(--user-bubble); }
+.msg.assistant { align-self: flex-start; background: var(--column); }
+.msg.pending { color: var(--muted); font-style: italic; }
+.msg.note { color: var(--muted); font-size: 0.85rem; max-width: 100%; padding: 0; }
+.msg.error { color: var(--danger); }
+
+.chat-form { display: flex; gap: 0.5rem; margin-top: 0.75rem; }
+.chat-form textarea {
+  flex: 1;
+  resize: none;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+}
+
+button {
+  padding: 0.45rem 0.9rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+}
+button:disabled { opacity: 0.5; cursor: default; }
+.chat-form button, button.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); }
+button.danger { color: var(--danger); border-color: var(--danger); }
+
+/* ---------- dialog ---------- */
+
+dialog {
+  border: none;
+  border-radius: 10px;
+  padding: 1.25rem;
+  width: min(440px, calc(100vw - 2rem));
+  background: var(--surface);
+  color: var(--text);
+}
+dialog::backdrop { background: rgba(9, 30, 66, 0.45); }
+dialog h2 { margin: 0 0 1rem; font-size: 1.1rem; }
+dialog label { display: block; margin-bottom: 0.75rem; font-size: 0.9rem; color: var(--muted); }
+dialog input, dialog textarea {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+}
+.dialog-actions { display: flex; gap: 0.5rem; }
+.spacer { flex: 1; }
+
+/* ---------- narrow screens ---------- */
+
+@media (max-width: 800px) {
+  .layout { grid-template-columns: 1fr; height: auto; }
+  .board { flex-direction: column; align-items: stretch; }
+  .column { flex-basis: auto; }
+  .chat { min-height: 420px; }
+}
