@@ -1,0 +1,56 @@
+# Self-hosted n8n plus Ollama for Module 3.
+#
+#   docker compose up -d
+#   docker compose exec ollama ollama pull llama3.2
+#
+# n8n:    http://localhost:5678
+# Ollama: http://localhost:11434 from the host, http://ollama:11434 from inside n8n
+#
+# Set your timezone in a .env file next to this one (GENERIC_TIMEZONE=Europe/Berlin, say);
+# it falls back to UTC. Schedules and the demo booker's working hours use it.
+
+name: n8n-amplify
+
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    environment:
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE:-UTC}
+      - TZ=${GENERIC_TIMEZONE:-UTC}
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      # Plain http on localhost, so the auth cookie cannot be marked Secure.
+      - N8N_SECURE_COOKIE=false
+      # The URL n8n prints for webhooks, forms, chat and MCP triggers.
+      - WEBHOOK_URL=http://localhost:5678/
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - n8n-net
+    depends_on:
+      - ollama
+
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    networks:
+      - n8n-net
+
+volumes:
+  # Same name as the volume from the plain `docker run` route, so either way
+  # sees the same workflows and credentials.
+  n8n_data:
+    name: n8n_data
+  ollama_data:
+    name: ollama_data
+
+networks:
+  n8n-net:

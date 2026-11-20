@@ -1,0 +1,492 @@
+{
+  "name": "GTM - CRM Writer (Pipedrive)",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "leads_json"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        300
+      ],
+      "id": "d167d0d1-c404-5396-b075-bbfc7a51a195",
+      "name": "When Called by Orchestrator"
+    },
+    {
+      "parameters": {
+        "jsCode": "// leads_json arrives from the orchestrator as a JSON string (or, depending on\n// how the model fills it, an array). Re-validate here: this workflow writes to\n// the CRM, so it does not trust what it is handed.\nconst MAX_FIELD = 200;\nconst emailRe = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;\nconst clean = (v) => String(v ?? '').replace(/[\\r\\n\\t]+/g, ' ').trim().slice(0, MAX_FIELD);\n\nlet input = $input.first().json.leads_json;\nif (typeof input === 'string') {\n  try {\n    input = JSON.parse(input);\n  } catch (e) {\n    throw new Error('leads_json is not valid JSON.');\n  }\n}\nconst list = Array.isArray(input) ? input : Array.isArray(input?.leads) ? input.leads : [];\n\nconst leads = list\n  .map((l) => ({\n    company: clean(l.company),\n    domain: clean(l.domain).toLowerCase(),\n    contact_name: clean(l.contact_name),\n    contact_email: clean(l.contact_email).toLowerCase(),\n    title: clean(l.title),\n    reason: clean(l.reason),\n  }))\n  .filter((l) => l.company && emailRe.test(l.contact_email));\n\nif (leads.length === 0) {\n  throw new Error('No valid leads in leads_json (each needs company and contact_email).');\n}\nreturn leads.map((json) => ({ json }));\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        300
+      ],
+      "id": "feace957-6266-5c21-9ff1-69c85cebbc2e",
+      "name": "Split Leads"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        440,
+        300
+      ],
+      "id": "028a7382-270c-5493-a158-f3027706b538",
+      "name": "Loop Over Leads"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "search",
+        "term": "={{ $json.company }}",
+        "limit": 1,
+        "additionalFields": {
+          "exactMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        660,
+        380
+      ],
+      "id": "1c7f906e-0ad1-5a07-a489-241e08bdd064",
+      "name": "Search Organization",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d0fa4731-868c-5d3c-b0a1-62b9bf1f7186",
+              "leftValue": "={{ String($json.id ?? $json.item?.id ?? '') }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        380
+      ],
+      "id": "a1916896-150d-515c-a401-3fcdc0bfb926",
+      "name": "Org Exists?"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const lead = $('Loop Over Leads').item.json;\nreturn { json: { ...lead, org_id: $json.id ?? $json.item?.id, org_created: false } };\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1100,
+        280
+      ],
+      "id": "e1797f0b-c626-54b5-b264-72952018ba34",
+      "name": "Use Existing Org"
+    },
+    {
+      "parameters": {
+        "resource": "organization",
+        "operation": "create",
+        "name": "={{ $('Loop Over Leads').item.json.company }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        480
+      ],
+      "id": "d5b69859-43d5-5311-a06f-0de98f261503",
+      "name": "Create Organization"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const lead = $('Loop Over Leads').item.json;\nreturn { json: { ...lead, org_id: $json.id, org_created: true } };\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1320,
+        480
+      ],
+      "id": "a25a42e1-a7a3-5b09-b727-3fbd23e6be6e",
+      "name": "Use New Org"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1540,
+        380
+      ],
+      "id": "5aaaeeb9-62dc-5fae-85af-1fe19c922cae",
+      "name": "Lead With Org"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "search",
+        "term": "={{ $json.contact_email }}",
+        "limit": 1,
+        "additionalFields": {
+          "fields": "email",
+          "exactMatch": true
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        380
+      ],
+      "id": "10b41b59-5107-539f-b55e-af8d16929a82",
+      "name": "Search Person",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "17c55a72-9252-57e9-b874-09be4ee9b3cf",
+              "leftValue": "={{ String($json.id ?? $json.item?.id ?? '') }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1980,
+        380
+      ],
+      "id": "412ea46b-1b42-5309-92d8-7a932ec2e67c",
+      "name": "Person Exists?"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Known contact: leave their existing deals alone, just report the ids.\nconst lead = $('Lead With Org').item.json;\nreturn {\n  json: {\n    company: lead.company,\n    contact_name: lead.contact_name,\n    contact_email: lead.contact_email,\n    title: lead.title,\n    org_id: lead.org_id,\n    person_id: $json.id ?? $json.item?.id,\n    deal_id: null,\n    status: 'existing_contact',\n  },\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2200,
+        280
+      ],
+      "id": "3dadaed0-e177-5e6e-b33c-04a29061b757",
+      "name": "Already in CRM"
+    },
+    {
+      "parameters": {
+        "resource": "person",
+        "operation": "create",
+        "name": "={{ $('Lead With Org').item.json.contact_name || $('Lead With Org').item.json.contact_email }}",
+        "additionalFields": {
+          "email": [
+            "={{ $('Lead With Org').item.json.contact_email }}"
+          ],
+          "org_id": "={{ $('Lead With Org').item.json.org_id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        2200,
+        480
+      ],
+      "id": "6fdad7fc-888d-5a94-9e8b-72ddc7427b5a",
+      "name": "Create Person"
+    },
+    {
+      "parameters": {
+        "resource": "deal",
+        "operation": "create",
+        "title": "={{ $('Lead With Org').item.json.company }} - demo",
+        "associateWith": "organization",
+        "org_id": "={{ $('Lead With Org').item.json.org_id }}",
+        "additionalFields": {
+          "person_id": "={{ $json.id }}"
+        }
+      },
+      "type": "n8n-nodes-base.pipedrive",
+      "typeVersion": 1,
+      "position": [
+        2420,
+        480
+      ],
+      "id": "a8de665a-e7b5-5a74-aadb-1c8790bfd18c",
+      "name": "Create Deal"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const lead = $('Lead With Org').item.json;\nreturn {\n  json: {\n    company: lead.company,\n    contact_name: lead.contact_name,\n    contact_email: lead.contact_email,\n    title: lead.title,\n    org_id: lead.org_id,\n    person_id: $('Create Person').item.json.id,\n    deal_id: $json.id,\n    status: lead.org_created ? 'created_org_person_deal' : 'created_person_deal',\n  },\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2640,
+        480
+      ],
+      "id": "97b97c80-c412-5851-91bc-4f21104c2327",
+      "name": "New Lead Added"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Runs once, when the loop is done. This is what the orchestrator gets back.\nconst results = $input.all().map((i) => i.json);\nreturn [{\n  json: {\n    created: results.filter((r) => r.status.startsWith('created')).length,\n    existing: results.filter((r) => r.status === 'existing_contact').length,\n    results,\n  },\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        120
+      ],
+      "id": "b4a243ff-3651-51cc-a88d-6a392db7a124",
+      "name": "Collect Results"
+    }
+  ],
+  "connections": {
+    "When Called by Orchestrator": {
+      "main": [
+        [
+          {
+            "node": "Split Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Leads": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Leads": {
+      "main": [
+        [
+          {
+            "node": "Collect Results",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Search Organization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Organization": {
+      "main": [
+        [
+          {
+            "node": "Org Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Org Exists?": {
+      "main": [
+        [
+          {
+            "node": "Use Existing Org",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Organization",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Organization": {
+      "main": [
+        [
+          {
+            "node": "Use New Org",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use Existing Org": {
+      "main": [
+        [
+          {
+            "node": "Lead With Org",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Use New Org": {
+      "main": [
+        [
+          {
+            "node": "Lead With Org",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lead With Org": {
+      "main": [
+        [
+          {
+            "node": "Search Person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Person": {
+      "main": [
+        [
+          {
+            "node": "Person Exists?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Person Exists?": {
+      "main": [
+        [
+          {
+            "node": "Already in CRM",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Create Person",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Person": {
+      "main": [
+        [
+          {
+            "node": "Create Deal",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create Deal": {
+      "main": [
+        [
+          {
+            "node": "New Lead Added",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Already in CRM": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "New Lead Added": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Leads",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": ""
+  }
+}

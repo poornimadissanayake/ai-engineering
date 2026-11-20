@@ -1,0 +1,9 @@
+sku,name,category,price_usd,stock,lead_time_days
+LMP-001,Halden desk lamp,Lighting,49.00,120,3
+LMP-002,Orsa floor lamp,Lighting,129.00,35,5
+CHR-010,Tove task chair,Seating,239.00,18,10
+CHR-011,Brisk stool,Seating,89.00,64,4
+DSK-020,Kettil standing desk,Desks,549.00,9,21
+DSK-021,Mira side table,Desks,119.00,40,7
+STO-030,Lumen shelf unit,Storage,179.00,22,14
+STO-031,Pell storage box (set of 3),Storage,29.00,300,2

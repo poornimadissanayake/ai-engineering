@@ -1,0 +1,130 @@
+{
+  "name": "Product Catalogue MCP Server",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "bearerAuth",
+        "path": "product-catalogue"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpTrigger",
+      "typeVersion": 2,
+      "position": [
+        300,
+        200
+      ],
+      "id": "341892e6-cac2-53c3-95cc-5c49586f4f6e",
+      "name": "MCP Server Trigger",
+      "webhookId": "d651005a-4129-5954-8e64-04558db60368"
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Returns every row of the product catalogue: sku, name, category, price_usd, stock, lead_time_days. Call this before answering any question about products, prices or stock. Prices are in USD.",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Products",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        0,
+        460
+      ],
+      "id": "b8f50901-2111-5a53-9f15-7d5a71537c5a",
+      "name": "Get Product Catalogue"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        260,
+        460
+      ],
+      "id": "3c2c3418-a9dc-5690-9a4d-defdcd3f7f19",
+      "name": "Calculator"
+    },
+    {
+      "parameters": {
+        "toolDescription": "Converts an amount between currencies at today's ECB reference rate. Use it when someone asks for a price in a currency other than USD.",
+        "url": "https://api.frankfurter.app/latest",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "amount",
+              "value": "={{ $fromAI('amount', 'The amount to convert', 'number') }}"
+            },
+            {
+              "name": "from",
+              "value": "={{ $fromAI('from_currency', 'Three-letter ISO code to convert from, e.g. USD', 'string') }}"
+            },
+            {
+              "name": "to",
+              "value": "={{ $fromAI('to_currency', 'Three-letter ISO code to convert to, e.g. EUR', 'string') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequestTool",
+      "typeVersion": 4.2,
+      "position": [
+        520,
+        460
+      ],
+      "id": "4cfdc969-eaf6-5e21-95b4-5f7bd5fa77d0",
+      "name": "Convert Currency"
+    }
+  ],
+  "connections": {
+    "Get Product Catalogue": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert Currency": {
+      "ai_tool": [
+        [
+          {
+            "node": "MCP Server Trigger",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": ""
+  }
+}

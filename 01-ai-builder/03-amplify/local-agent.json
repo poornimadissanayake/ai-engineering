@@ -1,0 +1,135 @@
+{
+  "name": "Local Agent (Ollama)",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        300
+      ],
+      "id": "2a427050-d1b7-567d-9a47-16afed7e4511",
+      "name": "When chat message received",
+      "webhookId": "c8dc6f95-6259-51cb-b1b7-9444bd49f64c"
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are a helpful assistant running on a local model. Answer briefly and plainly. If you are not sure of something, say so rather than guessing."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        260,
+        300
+      ],
+      "id": "9f9346bc-e85a-5867-aaa9-a359fd2c8ac6",
+      "name": "Local Agent"
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:latest",
+        "options": {
+          "temperature": 0.4
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        180,
+        540
+      ],
+      "id": "f366b24e-917f-59cf-bdb8-94aaeb06771f",
+      "name": "Ollama Chat Model"
+    },
+    {
+      "parameters": {
+        "contextWindowLength": 10
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        380,
+        540
+      ],
+      "id": "d7f46db7-2530-582e-afb8-dae65ead172f",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        180,
+        760
+      ],
+      "id": "10b468d6-5aa9-5bfc-9b27-748c23722a78",
+      "name": "OpenRouter Chat Model (DeepSeek)",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Swapping the model\nThe Ollama base URL lives on the **Ollama credential**, not on the node: set it to `http://ollama:11434` when n8n runs in the docker-compose stack.\n\nTo try DeepSeek instead: enable the OpenRouter node, delete the link from Ollama to the agent, and drag OpenRouter onto the agent's Chat Model input.",
+        "height": 260,
+        "width": 220
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -60,
+        680
+      ],
+      "id": "8d17cebf-2d16-594b-9a3c-4dc775ceac33",
+      "name": "Swap Models"
+    }
+  ],
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Local Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Local Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "Local Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": ""
+  }
+}

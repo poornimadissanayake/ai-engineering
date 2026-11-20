@@ -1,0 +1,309 @@
+{
+  "name": "GTM - Demo Booker",
+  "nodes": [
+    {
+      "parameters": {
+        "workflowInputs": {
+          "values": [
+            {
+              "name": "company"
+            },
+            {
+              "name": "contact_name"
+            },
+            {
+              "name": "contact_email"
+            },
+            {
+              "name": "title"
+            },
+            {
+              "name": "deal_id"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        300
+      ],
+      "id": "f24c9ed6-d908-57f1-a5cd-654060a08514",
+      "name": "When Called by Orchestrator"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Check the email and set the search window: tomorrow onwards, SEARCH_DAYS long.\nconst SEARCH_DAYS = 7;\nconst MAX_FIELD = 120;\nconst clean = (v) => String(v ?? '').replace(/[\\r\\n\\t]+/g, ' ').trim().slice(0, MAX_FIELD);\n\nconst lead = $input.first().json;\nconst email = clean(lead.contact_email).toLowerCase();\nif (!/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(email)) {\n  throw new Error('contact_email is missing or is not an email address.');\n}\n\nconst start = DateTime.now().plus({ days: 1 }).startOf('day');\nconst end = start.plus({ days: SEARCH_DAYS });\n\nreturn [{\n  json: {\n    company: clean(lead.company),\n    contact_name: clean(lead.contact_name) || 'there',\n    contact_email: email,\n    title: clean(lead.title),\n    deal_id: clean(lead.deal_id),\n    window_start: start.toISO(),\n    window_end: end.toISO(),\n  },\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        300
+      ],
+      "id": "bc5c40cd-eeca-55b3-9a21-09ac19a3c2fc",
+      "name": "Validate Lead"
+    },
+    {
+      "parameters": {
+        "resource": "calendar",
+        "calendar": {
+          "__rl": true,
+          "value": "YOUR_CALENDAR_ID",
+          "mode": "id"
+        },
+        "timeMin": "={{ $json.window_start }}",
+        "timeMax": "={{ $json.window_end }}",
+        "options": {
+          "outputFormat": "bookedSlots"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        440,
+        300
+      ],
+      "id": "e67d2527-a26f-59bd-9abe-5a0932611040",
+      "name": "Get Busy Slots",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "// First free weekday slot inside working hours. Times are in the instance's\n// timezone (GENERIC_TIMEZONE in docker-compose.yml).\nconst SLOT_MINUTES = 30;\nconst DAY_START_HOUR = 10;\nconst DAY_END_HOUR = 16;\n\nconst lead = $('Validate Lead').first().json;\n\n// Booked slots can come back as one item per slot or as an array on one item.\nconst busy = [];\nfor (const item of $input.all()) {\n  const j = item.json || {};\n  const list = Array.isArray(j.busy) ? j.busy : [j];\n  for (const b of list) {\n    if (b && b.start && b.end) busy.push([DateTime.fromISO(b.start), DateTime.fromISO(b.end)]);\n  }\n}\n\nconst windowEnd = DateTime.fromISO(lead.window_end);\nlet slot = null;\nfor (let day = DateTime.fromISO(lead.window_start); day < windowEnd && !slot; day = day.plus({ days: 1 })) {\n  if (day.weekday > 5) continue;\n  const dayEnd = day.set({ hour: DAY_END_HOUR, minute: 0, second: 0, millisecond: 0 });\n  let t = day.set({ hour: DAY_START_HOUR, minute: 0, second: 0, millisecond: 0 });\n  while (t.plus({ minutes: SLOT_MINUTES }) <= dayEnd) {\n    const tEnd = t.plus({ minutes: SLOT_MINUTES });\n    const clash = busy.some(([bs, be]) => t < be && tEnd > bs);\n    if (!clash) {\n      slot = { start: t, end: tEnd };\n      break;\n    }\n    t = tEnd;\n  }\n}\n\nreturn [{\n  json: {\n    ...lead,\n    slot_found: slot !== null,\n    slot_start: slot ? slot.start.toISO() : null,\n    slot_end: slot ? slot.end.toISO() : null,\n  },\n}];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        660,
+        300
+      ],
+      "id": "53c6d74c-606f-5623-96c0-47ff877374e7",
+      "name": "Pick Slot"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "97630ddd-86c3-5528-b446-4c209866461c",
+              "leftValue": "={{ $json.slot_found }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        880,
+        300
+      ],
+      "id": "b7c51b93-9392-558e-8ccf-d907013fc5b9",
+      "name": "Slot Found?"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "6ab22987-3ecc-585a-b270-697ade1d09ab",
+              "name": "status",
+              "value": "no_free_slot",
+              "type": "string"
+            },
+            {
+              "id": "207faf14-fccd-526c-8631-166515220b57",
+              "name": "company",
+              "value": "={{ $json.company }}",
+              "type": "string"
+            },
+            {
+              "id": "f72ad77d-24f7-515d-8621-8b1d53cd2e86",
+              "name": "contact_email",
+              "value": "={{ $json.contact_email }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1100,
+        460
+      ],
+      "id": "8a7aad23-213a-507e-a8f4-3efff05402fe",
+      "name": "No Free Slot"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "YOUR_CALENDAR_ID",
+          "mode": "id"
+        },
+        "start": "={{ $json.slot_start }}",
+        "end": "={{ $json.slot_end }}",
+        "additionalFields": {
+          "summary": "=Demo (HOLD) - {{ $json.company }}",
+          "description": "=Proposed demo with {{ $json.contact_name }} ({{ $json.title }}) at {{ $json.company }}. Pipedrive deal: {{ $json.deal_id || 'n/a' }}. Invitation is a Gmail draft, not sent yet.",
+          "attendees": [
+            "={{ $json.contact_email }}"
+          ],
+          "sendUpdates": "none"
+        }
+      },
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.3,
+      "position": [
+        1100,
+        200
+      ],
+      "id": "a7d8e55e-dda6-5758-9362-9d685db7c5d9",
+      "name": "Hold Demo Slot"
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "=Quick demo for {{ $('Pick Slot').item.json.company }}?",
+        "emailType": "text",
+        "message": "=Hi {{ $('Pick Slot').item.json.contact_name }},\n\nI'd like to show you a short demo of what we do and how it could help {{ $('Pick Slot').item.json.company }}.\n\nWould {{ DateTime.fromISO($('Pick Slot').item.json.slot_start).toFormat(\"cccc d LLLL 'at' HH:mm ZZZZ\") }} work for 30 minutes? If not, reply with a time that suits you and I'll move it.\n\nBest regards",
+        "options": {
+          "sendTo": "={{ $('Pick Slot').item.json.contact_email }}"
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1320,
+        200
+      ],
+      "id": "15696dcc-6e1c-5cf3-a759-f24c3d04a296",
+      "name": "Draft Invitation"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "const lead = $('Pick Slot').item.json;\nconst event = $('Hold Demo Slot').item.json;\nreturn {\n  json: {\n    status: 'slot_held_invite_drafted',\n    company: lead.company,\n    contact_email: lead.contact_email,\n    slot_start: lead.slot_start,\n    slot_end: lead.slot_end,\n    event_id: event.id,\n    event_link: event.htmlLink,\n    draft_id: $json.id,\n    deal_id: lead.deal_id,\n  },\n};\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1540,
+        200
+      ],
+      "id": "57deba9a-54a4-5e4c-8f74-4adf9e285dce",
+      "name": "Return Booking"
+    }
+  ],
+  "connections": {
+    "When Called by Orchestrator": {
+      "main": [
+        [
+          {
+            "node": "Validate Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Lead": {
+      "main": [
+        [
+          {
+            "node": "Get Busy Slots",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Busy Slots": {
+      "main": [
+        [
+          {
+            "node": "Pick Slot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick Slot": {
+      "main": [
+        [
+          {
+            "node": "Slot Found?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Slot Found?": {
+      "main": [
+        [
+          {
+            "node": "Hold Demo Slot",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Free Slot",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Hold Demo Slot": {
+      "main": [
+        [
+          {
+            "node": "Draft Invitation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Draft Invitation": {
+      "main": [
+        [
+          {
+            "node": "Return Booking",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": ""
+  }
+}

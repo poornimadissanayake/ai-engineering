@@ -14,6 +14,8 @@ MCP and a multi-agent go-to-market capstone.
 - [`02-accelerate/`](02-accelerate/) — Accelerate: voice agents and RAG · 25 lectures · 3hr 42min
 - [`03-amplify/`](03-amplify/) — Amplify: multi-agent systems and MCP · 33 lectures · 5hr 41min
 
+Every lecture and build, grouped by my study week with tick boxes: [`TASKS.md`](TASKS.md).
+
 ## Projects
 
 Three, one per section. See the [projects index](../README.md#projects) on the repo home page.
@@ -25,3 +27,20 @@ workflow exported as JSON plus a README on what it does and what it connects to.
 
 **Export without credentials.** n8n's plain export embeds credential *references*, not secrets, but
 check any JSON before committing it — no keys, no tokens, no account ids.
+
+## Check on first import
+
+The workflow JSON was written against n8n 2.x node versions but has not been imported yet. These
+are the parameters most likely to need a touch in the editor the first time each one is opened:
+
+- **Gmail draft** (`gmail-draft-replies`, `gtm-demo-booker`) — thread id and recipient on draft create.
+- **Google Drive** (`rag-ingest`, `pdf-to-structured`) — download options for Google Docs conversion.
+- **Supabase vector store** (`rag-ingest`, `voice-agent-backend`) — table and query name, tool mode.
+- **MCP** (`mcp-server`, `gtm-lead-researcher`) — the server's production URL path and the client
+  transport (streamable HTTP vs SSE).
+- **Pipedrive** (`gtm-crm-writer`) — search result shape and person/deal association fields.
+- **Google Calendar** (`gtm-demo-booker`) — availability output format and attendee fields.
+- **Model names** — OpenRouter and Ollama model slugs change; pick a current one if one is refused.
+
+When a workflow has run end to end, tick its line in [`TASKS.md`](TASKS.md) and set the project to ✅
+on the [repo home page](../README.md#projects).
