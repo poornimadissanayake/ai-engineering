@@ -96,19 +96,19 @@ _Course week 1, day 5_
 
 _Course week 2, day 1_
 
-- [ ] How to Build AI Voice Agents with ElevenLabs Agent Platform · 8m
-- [ ] Build Your First AI Voice Agent with ElevenLabs Conversational AI · 9m
-- [ ] ElevenLabs Voice Agent Tools: Deploy Conversational AI with Widgets · 6m
-- [ ] Building Multi-Agent Workflows with ElevenLabs Voice AI Agents · 7m
+- [x] How to Build AI Voice Agents with ElevenLabs Agent Platform · 8m
+- [x] Build Your First AI Voice Agent with ElevenLabs Conversational AI · 9m
+- [x] ElevenLabs Voice Agent Tools: Deploy Conversational AI with Widgets · 6m
+- [x] Building Multi-Agent Workflows with ElevenLabs Voice AI Agents · 7m
 
 _Course week 2, day 2_
 
-- [ ] ElevenLabs n8n Integration: Building Conversational AI Voice Agents · 10m
-- [ ] Automate Text-to-Speech Using ElevenLabs API in n8n Workflows · 12m
-- [ ] How to Build a Voice AI Agent with n8n Webhook and ElevenLabs API · 9m
-- [ ] Build an AI Voice Agent with n8n, ElevenLabs, and Gemini Workflow · 5m
-- [ ] How to Connect ElevenLabs AI Voice Agent to n8n Workflow with Webhooks · 11m
-- [ ] How to Connect ElevenLabs AI Voice Agent to n8n Using Webhooks · 10m
+- [x] ElevenLabs n8n Integration: Building Conversational AI Voice Agents · 10m
+- [x] Automate Text-to-Speech Using ElevenLabs API in n8n Workflows · 12m
+- [x] How to Build a Voice AI Agent with n8n Webhook and ElevenLabs API · 9m
+- [x] Build an AI Voice Agent with n8n, ElevenLabs, and Gemini Workflow · 5m
+- [x] How to Connect ElevenLabs AI Voice Agent to n8n Workflow with Webhooks · 11m
+- [x] How to Connect ElevenLabs AI Voice Agent to n8n Using Webhooks · 10m
 
 **Build**
 
@@ -124,27 +124,27 @@ _Course week 2, day 2_
 
 _Course week 2, day 3_
 
-- [ ] What is RAG in AI: Retrieval-Augmented Generation Explained · 11m
-- [ ] How Embedding Models Enable Semantic Search in RAG Systems · 9m
-- [ ] How RAG Works: Vector Databases and Semantic Search Explained · 7m
-- [ ] Agentic RAG vs Traditional RAG: Building Smarter AI Retrieval Systems · 9m
+- [x] What is RAG in AI: Retrieval-Augmented Generation Explained · 11m
+- [x] How Embedding Models Enable Semantic Search in RAG Systems · 9m
+- [x] How RAG Works: Vector Databases and Semantic Search Explained · 7m
+- [x] Agentic RAG vs Traditional RAG: Building Smarter AI Retrieval Systems · 9m
 
 _Course week 2, day 4_
 
-- [ ] Building RAG Pipelines with Supabase Vector Database and Embeddings · 12m
-- [ ] How to Use n8n and Supabase Integration for AI-Powered RAG System · 10m
-- [ ] Building RAG Pipeline with n8n and Supabase Vector Store Setup · 8m
-- [ ] How to Set Up Supabase Vector Database for RAG with n8n · 9m
-- [ ] Supabase Vector Store Integration with n8n Using OpenAI Embeddings · 9m
-- [ ] Build a RAG Pipeline Using n8n and Supabase Vector Database · 8m
+- [x] Building RAG Pipelines with Supabase Vector Database and Embeddings · 12m
+- [x] How to Use n8n and Supabase Integration for AI-Powered RAG System · 10m
+- [x] Building RAG Pipeline with n8n and Supabase Vector Store Setup · 8m
+- [x] How to Set Up Supabase Vector Database for RAG with n8n · 9m
+- [x] Supabase Vector Store Integration with n8n Using OpenAI Embeddings · 9m
+- [x] Build a RAG Pipeline Using n8n and Supabase Vector Database · 8m
 
 _Course week 2, day 5_
 
-- [ ] Build RAG-Powered AI Voice Agent with N8N, Supabase & ElevenLabs · 8m
-- [ ] How to Build an AI Agent RAG System Using n8n and OpenAI Embeddings · 6m
-- [ ] Connect ElevenLabs Conversational AI to n8n Workflow with Webhook · 7m
-- [ ] Build Voice AI Agent with ElevenLabs and n8n Webhook Integration · 9m
-- [ ] How to Connect ElevenLabs AI Voice Agent to Twilio Phone Number · 13m
+- [x] Build RAG-Powered AI Voice Agent with N8N, Supabase & ElevenLabs · 8m
+- [x] How to Build an AI Agent RAG System Using n8n and OpenAI Embeddings · 6m
+- [x] Connect ElevenLabs Conversational AI to n8n Workflow with Webhook · 7m
+- [x] Build Voice AI Agent with ElevenLabs and n8n Webhook Integration · 9m
+- [x] How to Connect ElevenLabs AI Voice Agent to Twilio Phone Number · 13m
 
 **Build**
 
